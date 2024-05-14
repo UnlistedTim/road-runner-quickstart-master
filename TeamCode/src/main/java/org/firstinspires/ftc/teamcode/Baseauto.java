@@ -97,24 +97,25 @@ public class Baseauto extends BaseClass {
     public void slide_extend(){
         slide(0);
 
-
     }
 
     public void intake_grab(){
         arm_handle.setPosition(arm_handle_ip1);
-        pause(500);
+        pause(300);
         arm_grab.setPosition(arm_grab_hold);
         pause(500);
         arm_handle.setPosition(arm_handle_op7);
+        pause(100);
         slide(arm_slide_idle);
+
 
     }
 
     public void outtake_turn(){
         rotate(arm_rotate_op7);
-        pause(1500);
-        slide_extend();
+
     }
+
 
     public void outtake_1release(){
         arm_grab.setPosition(arm_grab_open2);
@@ -125,14 +126,14 @@ public class Baseauto extends BaseClass {
     public void outtake_2release(){
 
         arm_grab.setPosition(arm_grab_idle);
-        pause(500);
-        rotate(arm_rotate_op7-150);
+        pause(300);
+        rotate(arm_rotate_out_buffer);
         arm_handle.setPosition(arm_handle_idle);
 
 
         slide(arm_slide_idle);
-        pause(1000);
-        rotate(100);
+        pause(500);
+        rotate(arm_rotate_buffer);
     }
 
 
@@ -142,6 +143,13 @@ public class Baseauto extends BaseClass {
             arm_rotate.setTargetPosition(target);
             arm_rotate.setVelocity(arm_vel);
         }
+    }
+
+    public void intake_ready(){
+        rotate(arm_rotate_ground);
+        slide(arm_slide_extend);
+        arm_handle.setPosition(arm_handle_ip0);
+        arm_grab.setPosition(arm_grab_idle);
     }
 
 

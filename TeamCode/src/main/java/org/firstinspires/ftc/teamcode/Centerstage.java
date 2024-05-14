@@ -12,8 +12,6 @@ public class Centerstage extends LinearOpMode {
 
     int pixels = 2;
 
-
-    boolean robo_drive = true;
     public enum State {
         INTAKE,
         LIFT,
@@ -34,14 +32,13 @@ public class Centerstage extends LinearOpMode {
 
         rbg = new Baseauto(this, p1);
 
-
       //  if(rbg.april_ready) telemetry.addLine("April tag setup ready!");
-        telemetry.addLine("For practice only:");
-        telemetry.addLine(" BLUE:Driver --Cross ");
-        telemetry.addLine(" RED: Driver---Circle");
-        telemetry.addLine("Press  driver: ∆  to reset the IMU angle to Zero " );
-
-        telemetry.update();
+//        telemetry.addLine("For practice only:");
+//        telemetry.addLine(" BLUE:Driver --Cross ");
+//        telemetry.addLine(" RED: Driver---Circle");
+//        telemetry.addLine("Press  driver: ∆  to reset the IMU angle to Zero " );
+//
+//        telemetry.update();
 
 //        while (!isStarted() && !isStopRequested()) {
 
@@ -68,23 +65,14 @@ public class Centerstage extends LinearOpMode {
 //            }
 //
 //        }
-
-        telemetry.addLine("Press Start Now!:");
-        telemetry.update();
          if (isStopRequested()) return;
-
-        waitForStart();
+        rbg.slide(rbg.arm_slide_collapse);
         rbg.arm_handle.setPosition(rbg.arm_handle_idle);
         rbg.arm_grab.setPosition(rbg.arm_grab_idle);
 
-
-        rbg.slide(rbg.arm_slide_idle);
-
-
-
-     //only for the cam outside duirng the autonomus
-
-
+        telemetry.addLine("Press Start Now!:");
+        telemetry.update();
+        waitForStart();
 
         while (opModeIsActive()) {
 
@@ -92,38 +80,31 @@ public class Centerstage extends LinearOpMode {
             switch (state) {
 
                 case INTAKE:
-
                     if (gamepad1.left_bumper){
-                        rbg.rotate(0);
-                        rbg.slide_extend();
-                        rbg.arm_handle.setPosition(rbg.arm_handle_ip0);
+                        rbg.intake_ready();
                     }
 
                     if (gamepad1.right_bumper){
                         rbg.intake_grab();
-
+                    }
+                    if (gamepad2.triangle){
                         state = State.LIFT;
+                    }
+                    break;
+                case LIFT:
 
-
+                    if (gamepad2.right_bumper){
+                        rbg.outtake_turn();
                     }
 
 
-
-                    break;
-
-
-
-                case LIFT:
-
-                    if (gamepad1.dpad_up){
-                        rbg.outtake_turn();
+                    if (gamepad2.left_bumper){
+                        rbg.slide(rbg.arm_slide_extend);
 
                         state = State.OUTTAKE;
 
                         pixels = 2;
                     }
-
-
                     break;
 
                 case OUTTAKE:
@@ -135,27 +116,18 @@ public class Centerstage extends LinearOpMode {
                     else if (gamepad2.right_bumper && pixels == 1){
                         rbg.outtake_2release();
                         pixels--;
-
                         state = State.INTAKE;
-
-
                     }
 
 
                     break;
 
 
-
-
             }
-
 
             if (gamepad1.share){
                 rbg.ZeroSlide();
             }
-
-
-// run every cycle below
 
 
             rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
