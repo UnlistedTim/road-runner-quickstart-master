@@ -14,7 +14,6 @@ public class Centerstage extends LinearOpMode {
 
 
     boolean robo_drive = true;
-    boolean end_flag = false;
     public enum State {
         INTAKE,
         LIFT,
