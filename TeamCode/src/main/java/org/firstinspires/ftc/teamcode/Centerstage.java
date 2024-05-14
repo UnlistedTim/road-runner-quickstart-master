@@ -43,31 +43,31 @@ public class Centerstage extends LinearOpMode {
 
         telemetry.update();
 
-        while (!isStarted() && !isStopRequested()) {
+//        while (!isStarted() && !isStopRequested()) {
 
-            if (gamepad1.triangle) {
-                rbg.imu.initialize(rbg.imuparameters);
-                rbg.imu.resetYaw();
-                sleep(1000);
-                break;
-
-            }
-            if (gamepad1.cross) {
-
-                rbg.baseblue=true;
-                rbg.base_align_angle=-90;
-                rbg.base_apr_id=1;
-
-            }
-            if ( gamepad1.circle) {
-
-                rbg.baseblue=false;
-                rbg.base_align_angle=90;
-                rbg.base_apr_id=4;
-
-            }
-
-        }
+//            if (gamepad1.triangle) {
+//                rbg.imu.initialize(rbg.imuparameters);
+//                rbg.imu.resetYaw();
+//                sleep(1000);
+//                break;
+//
+//            }
+//            if (gamepad1.cross) {
+//
+//                rbg.baseblue=true;
+//                rbg.base_align_angle=-90;
+//                rbg.base_apr_id=1;
+//
+//            }
+//            if ( gamepad1.circle) {
+//
+//                rbg.baseblue=false;
+//                rbg.base_align_angle=90;
+//                rbg.base_apr_id=4;
+//
+//            }
+//
+//        }
 
         telemetry.addLine("Press Start Now!:");
         telemetry.update();
