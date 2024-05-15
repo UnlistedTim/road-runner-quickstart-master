@@ -87,9 +87,11 @@ public class Centerstage extends LinearOpMode {
                     if (gamepad1.right_bumper){
                         rbg.intake_grab();
                     }
-                    if (gamepad2.triangle){
+                    if (gamepad1.triangle){
                         state = State.LIFT;
                     }
+
+
                     break;
                 case LIFT:
 
@@ -98,13 +100,13 @@ public class Centerstage extends LinearOpMode {
                     }
 
 
-                    if (gamepad2.left_bumper){
-                        rbg.slide(rbg.arm_slide_extend);
-
+                    if (rbg.arm_rotate.getCurrentPosition() > 1750){
+                        rbg.outtake_ready();
                         state = State.OUTTAKE;
 
                         pixels = 2;
                     }
+
                     break;
 
                 case OUTTAKE:
@@ -125,6 +127,9 @@ public class Centerstage extends LinearOpMode {
 
             }
 
+            rbg.coordinate_input(gamepad2.triangle,gamepad2.circle,gamepad2.cross,gamepad2.square);
+            rbg.coordinate_confirm(gamepad2.touchpad);
+
             if (gamepad1.share){
                 rbg.ZeroSlide();
             }
@@ -132,12 +137,17 @@ public class Centerstage extends LinearOpMode {
 
             rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
 
+
+            telemetry.addData("TempInput", rbg.tempinput);
+            telemetry.update();
+
 //            if (rbg.driving) {
 //                if (robo_drive)
 //                    rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
 //                else
 //                    rbg.field_centric(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
 //            }
+
 
 
 

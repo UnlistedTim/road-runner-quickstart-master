@@ -65,16 +65,16 @@ public class BaseClass extends MecanumDrive {
    public static int    base_apr_id;
 
    //Servo preset value
-   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.5;
-   double arm_handle_op1,arm_handle_op2,arm_handle_op3,arm_handle_op4,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
+   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.54;
+   double arm_handle_op1 = 0.61,arm_handle_op2 = 0.61,arm_handle_op3 = 0.61,arm_handle_op4 = 0.61,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
   double arm_grab_hold = 0.34,arm_grab_idle = 0.0,arm_grab_open1,arm_grab_open2 = 0.2;
 
   //Motor preset value
 
-    int  arm_rotate_ground = 0, arm_rotate_buffer = 200, arm_rotate_ip1,arm_rotate_ip2,arm_rotate_ip3,arm_rotate_ip4,arm_rotate_ip5;
-    int  arm_rotate_op1,arm_rotate_op2,arm_rotate_op3,arm_rotate_op4,arm_rotate_op5,arm_rotate_op6,arm_rotate_op7 = 1600,arm_rotate_op8,arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op7 - 150;
-    int arm_slide_extend = 0,arm_slide_turn = -3000, arm_slide_idle = -4250, arm_slide_collapse = -4500;
-    int  arm_slide_op1,arm_slide_op2,arm_slide_op3,arm_slide_op4,arm_slide_op5,arm_slide_op6,arm_slide_op7,arm_slide_op8,arm_slide_op9;
+    int  arm_rotate_ground = 0, arm_rotate_buffer = 150, arm_rotate_ip1,arm_rotate_ip2,arm_rotate_ip3,arm_rotate_ip4,arm_rotate_ip5;
+    int  arm_rotate_op1 = 1800,arm_rotate_op2 = 1800,arm_rotate_op3 = 1800,arm_rotate_op4 = 1800,arm_rotate_op5,arm_rotate_op6,arm_rotate_op7 = 1600,arm_rotate_op8,arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op4 - 150;
+    int arm_slide_extend = 0,arm_slide_turn = -3000, arm_slide_idle = -4500, arm_slide_collapse = -5000;
+    int  arm_slide_op1 = -3400,arm_slide_op2 = -2400 ,arm_slide_op3 = -1400,arm_slide_op4 = -400,arm_slide_op5,arm_slide_op6,arm_slide_op7,arm_slide_op8,arm_slide_op9;
 
 
 

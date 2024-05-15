@@ -138,16 +138,16 @@ public class OffDebugCenter extends LinearOpMode {
 
             if(gamepad2.circle && slide_pos < 0) {
                 sleep(400);
-                slide_pos += 200;
+                slide_pos += 100;
                 rbg.arm_slide.setTargetPosition(slide_pos);
-                rbg.arm_slide.setVelocity(1500);
+                rbg.arm_slide.setVelocity(2000);
             }
 
-            if(gamepad2.square && slide_pos > -4000 ){
+            if(gamepad2.square && slide_pos > -6000 ){
                 sleep(400);
-                slide_pos-=200;
+                slide_pos-=100;
                 rbg.arm_slide.setTargetPosition(slide_pos);
-                rbg.arm_slide.setVelocity(1500);
+                rbg.arm_slide.setVelocity(2000);
             }
 
 

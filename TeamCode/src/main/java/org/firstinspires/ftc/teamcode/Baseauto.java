@@ -40,6 +40,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Baseauto extends BaseClass {
 
+    int innum = 0;
+
     public Baseauto(LinearOpMode op, Pose2d p1) {
         super(op, p1);
     }
@@ -84,10 +86,38 @@ public class Baseauto extends BaseClass {
 
     }
 
+    public void coordinate_input(boolean tri, boolean cir, boolean cross,boolean square)
+    {
+//
+        if(!tri&& !cir&& !cross&&!square) return;
+        if(tri) {
+            innum=1 ;
+        }
+        else if (cir) {
+            innum=2;
+        }
+        else if (cross) {
+            innum=3;
+        }
+        else if (square) {
+            innum=4;
+        }
+        else return;
+        timerinput(0);
+
+    }
+
+    public void coordinate_confirm(boolean touch){
+        if (!touch) return;
+        if (touch){
+            tempinput = innum;
+        }
+    }
+
 
     public void slide(int target){
 
-        if (target >= -4250 && target <= 0){
+        if (target >= -5000 && target <= 0){
             arm_slide.setTargetPosition(target);
             arm_slide.setVelocity(slide_vel);
         }
@@ -100,19 +130,44 @@ public class Baseauto extends BaseClass {
     }
 
     public void intake_grab(){
+
+
+        arm_rotate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
         arm_handle.setPosition(arm_handle_ip1);
         pause(300);
         arm_grab.setPosition(arm_grab_hold);
         pause(500);
-        arm_handle.setPosition(arm_handle_op7);
+        arm_handle.setPosition(arm_handle_idle);
         pause(100);
         slide(arm_slide_idle);
+
+        arm_rotate.setTargetPosition(0);
+        arm_rotate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
     }
 
     public void outtake_turn(){
-        rotate(arm_rotate_op7);
+//        rotate(arm_rotate_op7);
+        if (tempinput == 1){
+            rotate(arm_rotate_op1);
+            arm_handle.setPosition(arm_handle_op1);
+        }
+        else if (tempinput == 2){
+            rotate(arm_rotate_op2);
+            arm_handle.setPosition(arm_handle_op2);
+        }
+        else if (tempinput == 3){
+            rotate(arm_rotate_op3);
+            arm_handle.setPosition(arm_handle_op3);
+        }
+        else if (tempinput == 4){
+            rotate(arm_rotate_op4);
+            arm_handle.setPosition(arm_handle_op4);
+        }
 
     }
 
@@ -123,16 +178,34 @@ public class Baseauto extends BaseClass {
 
     }
 
+    public void outtake_ready(){
+        if (tempinput == 1){
+            slide(arm_slide_op1);
+        }
+        else if (tempinput == 2){
+            slide(arm_slide_op2);
+
+        }
+        else if (tempinput == 3){
+            slide(arm_slide_op3);
+
+        }
+        else if (tempinput == 4){
+            slide(arm_slide_op4);
+
+        }
+
+
+    }
+
     public void outtake_2release(){
 
         arm_grab.setPosition(arm_grab_idle);
-        pause(300);
+        pause(200);
         rotate(arm_rotate_out_buffer);
-        arm_handle.setPosition(arm_handle_idle);
-
-
         slide(arm_slide_idle);
-        pause(500);
+        arm_handle.setPosition(arm_handle_idle);
+        //pause(500);
         rotate(arm_rotate_buffer);
     }
 
@@ -150,6 +223,7 @@ public class Baseauto extends BaseClass {
         slide(arm_slide_extend);
         arm_handle.setPosition(arm_handle_ip0);
         arm_grab.setPosition(arm_grab_idle);
+        arm_rotate.setPower(0);
     }
 
 
