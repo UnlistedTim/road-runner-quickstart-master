@@ -75,8 +75,6 @@ public class Centerstage extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-
-
             switch (state) {
 
                 case INTAKE:
@@ -127,6 +125,13 @@ public class Centerstage extends LinearOpMode {
 
             }
 
+            if (gamepad1.dpad_right){
+                rbg.hang_ready();
+            }
+            if (gamepad1.dpad_right && rbg.arm_rotate.getCurrentPosition() > 800 && rbg.arm_slide.getCurrentPosition() > -800){
+                rbg.hang();
+            }
+
             rbg.coordinate_input(gamepad2.triangle,gamepad2.circle,gamepad2.cross,gamepad2.square);
             rbg.coordinate_confirm(gamepad2.touchpad);
 
@@ -147,15 +152,6 @@ public class Centerstage extends LinearOpMode {
 //                else
 //                    rbg.field_centric(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
 //            }
-
-
-
-
-
-
-
-
-
 
 
         }

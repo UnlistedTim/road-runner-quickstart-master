@@ -226,6 +226,19 @@ public class Baseauto extends BaseClass {
         arm_rotate.setPower(0);
     }
 
+    public void hang_ready(){
+        slide(arm_slide_idle);
+        pause(500);
+        rotate(arm_rotate_hang);
+        pause(500);
+        slide(arm_slide_hang);
+
+    }
+    public void hang(){
+        slide(arm_slide_idle);
+
+    }
+
 
 
 

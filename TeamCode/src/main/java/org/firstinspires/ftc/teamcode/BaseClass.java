@@ -73,8 +73,10 @@ public class BaseClass extends MecanumDrive {
 
     int  arm_rotate_ground = 0, arm_rotate_buffer = 150, arm_rotate_ip1,arm_rotate_ip2,arm_rotate_ip3,arm_rotate_ip4,arm_rotate_ip5;
     int  arm_rotate_op1 = 1800,arm_rotate_op2 = 1800,arm_rotate_op3 = 1800,arm_rotate_op4 = 1800,arm_rotate_op5,arm_rotate_op6,arm_rotate_op7 = 1600,arm_rotate_op8,arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op4 - 150;
+    int arm_rotate_hang = 900;
     int arm_slide_extend = 0,arm_slide_turn = -3000, arm_slide_idle = -4500, arm_slide_collapse = -5000;
     int  arm_slide_op1 = -3400,arm_slide_op2 = -2400 ,arm_slide_op3 = -1400,arm_slide_op4 = -400,arm_slide_op5,arm_slide_op6,arm_slide_op7,arm_slide_op8,arm_slide_op9;
+    int arm_slide_hang = -600;
 
 
 
