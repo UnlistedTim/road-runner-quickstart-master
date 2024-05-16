@@ -424,6 +424,8 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
         arm_grab = hardwareMap.get(Servo.class, "arm_grab");
         arm_handle = hardwareMap.get(Servo.class,"arm_handle");
 
+
+
         //arm_grab.scaleRange(0.44,0.84);
 //        arm_handle.scaleRange(0.07, 0.77);
         
@@ -445,7 +447,6 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
 
 
         arm_slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        arm_slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm_slide.setTargetPosition(0);
         arm_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 

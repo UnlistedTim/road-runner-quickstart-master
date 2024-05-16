@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Baseauto extends BaseClass {
 
-    int innum = 0;
+    int innum = 3;
 
     public Baseauto(LinearOpMode op, Pose2d p1) {
         super(op, p1);
@@ -133,15 +133,22 @@ public class Baseauto extends BaseClass {
 
 
         arm_rotate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm_slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
 
 
 
         arm_handle.setPosition(arm_handle_ip1);
         pause(300);
         arm_grab.setPosition(arm_grab_hold);
+        arm_slide.setTargetPosition(0);
+        arm_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         pause(500);
         arm_handle.setPosition(arm_handle_idle);
         pause(100);
+
+
         slide(arm_slide_idle);
 
         arm_rotate.setTargetPosition(0);
@@ -288,6 +295,8 @@ public class Baseauto extends BaseClass {
 
         finalxy();
     }
+
+
 
 
 

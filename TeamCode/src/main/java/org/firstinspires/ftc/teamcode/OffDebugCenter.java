@@ -3,15 +3,43 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+
+@Config
 @TeleOp(name = "DebugCode", group = "A")
 public class OffDebugCenter extends LinearOpMode {
     Baseauto rbg;
 
 
+
+
     boolean robo_drive = true;
     boolean end_flag = false;
+
+
+    int lastError = 0;
+
+
+    public static double kp = 0, ki = 0, kd = 0, ff = -0.3;
+
+
+
+
     public enum State {
         INTAKE,
         INTAKEDONE,
@@ -22,12 +50,62 @@ public class OffDebugCenter extends LinearOpMode {
 
     State state = State.INTAKE;
 
+    ElapsedTime pidtimer = new ElapsedTime();
+
+
+    public void slide_pid(int refrence){
+
+        rbg.arm_slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rbg.arm_slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        int lastError = refrence - rbg.arm_slide.getCurrentPosition();
+        double integralSum = 0;
+        while (opModeIsActive()){
+
+            int encoderPosition = rbg.arm_slide.getCurrentPosition();
+            // calculate the error
+            int error = refrence - encoderPosition;
+
+            // rate of change of the error
+            double derivative = (error - lastError ) / pidtimer.seconds();
+
+            // sum of all error over time
+            integralSum +=(error * pidtimer.seconds());
+
+
+            double out = (kp * error) + (ki * integralSum) + (kd * derivative) + ff;
+
+            rbg.arm_slide.setPower(out);
+
+            lastError = error;
+
+            // reset the timer for next time
+            pidtimer.reset();
+
+            if (gamepad1.share){
+                rbg.arm_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                rbg.arm_slide.setTargetPosition(0);
+                rbg.slide_extend();
+                break;
+            }
+            telemetry.addData("pos ", encoderPosition);
+            telemetry.addData("error", error);
+            telemetry.addData("target ", refrence);
+            telemetry.addData("power", out);
+            telemetry.update();
+        }
+
+
+
+    }
+
 
 
 
 
     @Override
     public void runOpMode() {
+
+
 
 
         telemetry.addLine("Wait ! Initializing............. ");
@@ -94,6 +172,7 @@ public class OffDebugCenter extends LinearOpMode {
 
 
         while (opModeIsActive()) {
+            rbg.arm_slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
             double y = -gamepad1.right_stick_y;
@@ -198,6 +277,10 @@ public class OffDebugCenter extends LinearOpMode {
                 rbg.arm_grab.setPosition(0.15);
                 sleep(500);
 
+            }
+
+            if (gamepad1.triangle){
+                slide_pid(-2000);
             }
 
             telemetry.addData("Arm_rotate Gunner.right/left bumper", arm_pos );
