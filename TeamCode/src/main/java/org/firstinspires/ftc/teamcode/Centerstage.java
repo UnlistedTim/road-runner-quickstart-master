@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name = "CenterStageA", group = "A")
@@ -12,6 +13,8 @@ public class Centerstage extends LinearOpMode {
 
     int pixels = 2;
 
+    double speed_factor = 1.0;
+
     public enum State {
         INTAKE,
         LIFT,
@@ -19,6 +22,8 @@ public class Centerstage extends LinearOpMode {
     }
 
     State state = State.INTAKE;
+
+    ElapsedTime outtake_timer = new ElapsedTime();
 
 
 
@@ -79,6 +84,7 @@ public class Centerstage extends LinearOpMode {
 
                 case INTAKE:
                     if (gamepad1.left_bumper){
+                        speed_factor = 0.4;
                         rbg.intake_ready();
                     }
 
@@ -86,6 +92,7 @@ public class Centerstage extends LinearOpMode {
                         rbg.intake_grab();
                     }
                     if (gamepad1.triangle){
+                        speed_factor = 1.0;
                         state = State.LIFT;
                     }
 
@@ -99,6 +106,9 @@ public class Centerstage extends LinearOpMode {
 
 
                     if (rbg.arm_rotate.getCurrentPosition() > 1750){
+
+
+
                         rbg.outtake_ready();
                         state = State.OUTTAKE;
 
@@ -108,6 +118,17 @@ public class Centerstage extends LinearOpMode {
                     break;
 
                 case OUTTAKE:
+                    speed_factor = 0.4;
+
+                    if (gamepad2.dpad_up && outtake_timer.milliseconds() > 400){
+                        rbg.manual_slide_up();
+                        outtake_timer.reset();
+                    }
+                    if (gamepad2.dpad_down && outtake_timer.milliseconds() > 400){
+
+                        rbg.manual_slide_down();
+                        outtake_timer.reset();
+                    }
 
                     if (gamepad2.right_bumper && pixels == 2){
                         rbg.outtake_1release();
@@ -117,6 +138,7 @@ public class Centerstage extends LinearOpMode {
                         rbg.outtake_2release();
                         pixels--;
                         state = State.INTAKE;
+                        speed_factor = 1.0;
                     }
 
 
@@ -140,7 +162,7 @@ public class Centerstage extends LinearOpMode {
             }
 
 
-            rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+            rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, speed_factor);
 
 
             telemetry.addData("TempInput", rbg.tempinput);

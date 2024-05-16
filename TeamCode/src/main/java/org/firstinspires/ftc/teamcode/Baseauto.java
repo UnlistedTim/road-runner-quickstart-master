@@ -205,6 +205,21 @@ public class Baseauto extends BaseClass {
 
     }
 
+    public void manual_slide_up(){
+
+        if (tempinput < 4){
+            tempinput++;
+        }
+        outtake_ready();
+    }
+
+    public void manual_slide_down(){
+        if (tempinput > 0){
+            tempinput--;
+        }
+        outtake_ready();
+    }
+
     public void outtake_2release(){
 
         arm_grab.setPosition(arm_grab_idle);

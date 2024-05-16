@@ -65,7 +65,7 @@ public class BaseClass extends MecanumDrive {
    public static int    base_apr_id;
 
    //Servo preset value
-   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.54;
+   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.55;
    double arm_handle_op1 = 0.61,arm_handle_op2 = 0.61,arm_handle_op3 = 0.61,arm_handle_op4 = 0.61,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
   double arm_grab_hold = 0.34,arm_grab_idle = 0.0,arm_grab_open1,arm_grab_open2 = 0.2;
 
@@ -523,7 +523,7 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
 
 
 
-    protected void robot_centric(double iy, double ix, double irx) {
+    protected void robot_centric(double iy, double ix, double irx, double ratio) {
         front_right.setDirection(DcMotorSimple.Direction.REVERSE);
         rear_right.setDirection(DcMotorSimple.Direction.REVERSE);
         double y = iy;
@@ -535,10 +535,10 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        front_left.setPower(frontLeftPower);
-        front_right.setPower(frontRightPower);
-        rear_left.setPower(backLeftPower);
-        rear_right.setPower(backRightPower);
+        front_left.setPower(frontLeftPower * ratio);
+        front_right.setPower(frontRightPower * ratio);
+        rear_left.setPower(backLeftPower * ratio);
+        rear_right.setPower(backRightPower * ratio);
 
 
     }
