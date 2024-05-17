@@ -13,6 +13,8 @@ public class Centerstage extends LinearOpMode {
 
     int pixels = 2;
 
+    boolean right_flag = false;
+
     double speed_factor = 1.0;
 
     public enum State {
@@ -86,14 +88,18 @@ public class Centerstage extends LinearOpMode {
                     if (gamepad1.left_bumper){
                         speed_factor = 0.4;
                         rbg.intake_ready();
+                        right_flag = true;
                     }
 
-                    if (gamepad1.right_bumper){
+                    if (gamepad1.right_bumper && right_flag){
                         rbg.intake_grab();
+                        right_flag = false;
+
                     }
                     if (gamepad1.triangle){
                         speed_factor = 1.0;
                         state = State.LIFT;
+
                     }
 
 

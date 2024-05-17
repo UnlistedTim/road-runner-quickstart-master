@@ -66,8 +66,8 @@ public class BaseClass extends MecanumDrive {
    public static int    base_apr_id;
 
    //Servo preset value
-   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.56;
-   double arm_handle_op1 = 0.65,arm_handle_op2 = 0.65,arm_handle_op3 = 0.65,arm_handle_op4 = 0.65,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
+   double arm_handle_ip0 = 0.03, arm_handle_ip1 = 0.02, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.56;
+   double arm_handle_op1 = 0.68,arm_handle_op2 = 0.68,arm_handle_op3 = 0.68,arm_handle_op4 = 0.68,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
   double arm_grab_hold = 0.34,arm_grab_idle = 0.0,arm_grab_open1,arm_grab_open2 = 0.2;
 
   //Motor preset value
@@ -455,6 +455,7 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
         arm_slide.setVelocity(0);
 
         arm_handle.setDirection(Servo.Direction.REVERSE);
+        drone.setDirection(Servo.Direction.REVERSE);
 
         front_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
