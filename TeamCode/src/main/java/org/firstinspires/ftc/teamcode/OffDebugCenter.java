@@ -158,9 +158,12 @@ public class OffDebugCenter extends LinearOpMode {
 
         double handle_pos = 0;
         double arm_grab_pos = 0;
+        double drone_pos = 0;
 
 
         waitForStart();
+
+        rbg.drone.setPosition(0);
 
         rbg.arm_grab.setPosition(0);
         rbg.arm_handle.setPosition(0);
@@ -271,6 +274,20 @@ public class OffDebugCenter extends LinearOpMode {
                 sleep(500);
             }
 
+            if (gamepad2.right_trigger>0.6){
+                drone_pos+=0.01;
+                rbg.drone.setPosition(drone_pos);
+                sleep(500);
+
+            }
+
+            if (gamepad2.left_trigger > 0.6){
+                drone_pos -= 0.01;
+                rbg.drone.setPosition(drone_pos);
+                sleep(500);
+
+            }
+
 
             //second Pixel release
             if (gamepad1.square){
@@ -287,6 +304,7 @@ public class OffDebugCenter extends LinearOpMode {
             telemetry.addData("Arm_slide Gunner.circle/square", slide_pos);
             telemetry.addData("Arm_grab Gunner.dpad_up/dpad_down", arm_grab_pos);
             telemetry.addData("Arm_handler Gunner.dpad_right,dpad_left", handle_pos);
+            telemetry.addData("Drone Gunner right_trigger, left_trigger", drone_pos);
             telemetry.update();
 
 

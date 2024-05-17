@@ -40,6 +40,7 @@ public class BaseClass extends MecanumDrive {
     protected DcMotorEx arm_slide;
     protected Servo arm_grab;
     protected Servo arm_handle;
+    protected Servo drone;
     
     
     
@@ -65,7 +66,7 @@ public class BaseClass extends MecanumDrive {
    public static int    base_apr_id;
 
    //Servo preset value
-   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.55;
+   double arm_handle_ip0 = 0.05, arm_handle_ip1 = 0.04, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.56;
    double arm_handle_op1 = 0.65,arm_handle_op2 = 0.65,arm_handle_op3 = 0.65,arm_handle_op4 = 0.65,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
   double arm_grab_hold = 0.34,arm_grab_idle = 0.0,arm_grab_open1,arm_grab_open2 = 0.2;
 
@@ -83,10 +84,10 @@ public class BaseClass extends MecanumDrive {
 
     final double SPEED_GAIN = 0.025; // 0.02  //  Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
     final double STRAFE_GAIN = 0.033; //0.03  //  Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
-    final double TURN_GAIN = 0.03;  //0.015  //  Turn Control "Gain".  eg: Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
+    final double TURN_GAIN = 0.03;  //0.015  //  Turn Controtl "Gain".  eg: Ramp up to 25% power at a 25 degree error. (0.25 / 25.0)
 
     final double MAX_AUTO_SPEED = 0.36;   //  Clip the approach speed to this max value (adjust for your robot)
-    final double MAX_AUTO_STRAFE = 0.5;   //  Clip the approach speed to this max value (adjust for your robot)
+    final double MAX_AUTO_STRAFE = 0.5;   //  Clip he approach speed to this max value (adjust for your robot)
     final double MAX_AUTO_TURN = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
     double DESIRED_DISTANCE_T = 27.5;//CM
     //double DESIRED_DISTANCE_A =10;//INCH?
@@ -423,6 +424,7 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
 
         arm_grab = hardwareMap.get(Servo.class, "arm_grab");
         arm_handle = hardwareMap.get(Servo.class,"arm_handle");
+        drone = hardwareMap.get(Servo.class, "drone");
 
 
 

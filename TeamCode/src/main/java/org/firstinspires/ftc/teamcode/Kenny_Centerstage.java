@@ -5,11 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-@TeleOp(name = "CenterStageA", group = "A")
+@TeleOp(name = "KennyCenter", group = "A")
 public class Kenny_Centerstage extends LinearOpMode {
     Baseauto rbg;
 
     int pixels = 2;
+
+    double speed_factor = 1.0;
 
     public enum State {
         INTAKE,
@@ -18,6 +20,7 @@ public class Kenny_Centerstage extends LinearOpMode {
     }
 
     State state = State.INTAKE;
+
 
 
 
@@ -78,13 +81,16 @@ public class Kenny_Centerstage extends LinearOpMode {
 
                 case INTAKE:
                     if (gamepad1.left_bumper){
+                        speed_factor = 0.4;
                         rbg.intake_ready();
+
                     }
 
                     if (gamepad1.right_bumper){
                         rbg.intake_grab();
                     }
                     if (gamepad1.triangle){
+                        speed_factor = 1.0;
                         state = State.LIFT;
                     }
 
@@ -102,6 +108,7 @@ public class Kenny_Centerstage extends LinearOpMode {
                         state = State.OUTTAKE;
 
                         pixels = 2;
+                        speed_factor = 0.4;
                     }
 
                     break;
@@ -116,6 +123,7 @@ public class Kenny_Centerstage extends LinearOpMode {
                         rbg.outtake_2release();
                         pixels--;
                         state = State.INTAKE;
+                        speed_factor = 1.0;
                     }
 
 
@@ -139,7 +147,7 @@ public class Kenny_Centerstage extends LinearOpMode {
             }
 
 
-            rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+            rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x,speed_factor);
 
 
             telemetry.addData("TempInput", rbg.tempinput);
