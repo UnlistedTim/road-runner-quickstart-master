@@ -175,7 +175,7 @@ public class Centerstage extends LinearOpMode {
                 rbg.hang();
             }
 
-            if (gamepad2.dpad_up){
+            if (gamepad2.dpad_left){
                 rbg.drone_fly();
             }
 
