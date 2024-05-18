@@ -67,13 +67,13 @@ public class BaseClass extends MecanumDrive {
 
    //Servo preset value
    double arm_handle_ip0 = 0.03, arm_handle_ip1 = 0.02, arm_handle_ip2,arm_handle_ip3,arm_handle_ip4,arm_handle_ip5,arm_handle_idle = 0.56;
-   double arm_handle_op1 = 0.68,arm_handle_op2 = 0.68,arm_handle_op3 = 0.68,arm_handle_op4 = 0.68,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
+   double arm_handle_op1 = 0.64,arm_handle_op2 = 0.64,arm_handle_op3 = 0.64,arm_handle_op4 = 0.64,arm_handle_op6,arm_handle_op7 =  0.68 ,arm_handle_op8,arm_handle_op9;
   double arm_grab_hold = 0.34,arm_grab_idle = 0.0,arm_grab_open1,arm_grab_open2 = 0.2;
 
   //Motor preset value
 
     int  arm_rotate_ground = 0, arm_rotate_buffer = 150, arm_rotate_ip1,arm_rotate_ip2,arm_rotate_ip3,arm_rotate_ip4,arm_rotate_ip5;
-    int  arm_rotate_op1 = 1800,arm_rotate_op2 = 1800,arm_rotate_op3 = 1800,arm_rotate_op4 = 1800,arm_rotate_op5,arm_rotate_op6,arm_rotate_op7 = 1600,arm_rotate_op8,arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op4 - 150;
+    int  arm_rotate_op1 = 1700,arm_rotate_op2 = 1700,arm_rotate_op3 = 1700,arm_rotate_op4 = 1700,arm_rotate_op5,arm_rotate_op6,arm_rotate_op7 = 1600,arm_rotate_op8,arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op4 - 150;
     int arm_rotate_hang = 900;
     int arm_slide_extend = 0,arm_slide_turn = -3000, arm_slide_idle = -4500, arm_slide_collapse = -5000;
     int  arm_slide_op1 = -3400,arm_slide_op2 = -2400 ,arm_slide_op3 = -1400,arm_slide_op4 = -400,arm_slide_op5,arm_slide_op6,arm_slide_op7,arm_slide_op8,arm_slide_op9;
@@ -216,6 +216,8 @@ final  double[] row1xc = {0.42, 0.42,0.42, 0.42, 0.205, 0.305, 0.395};
     int grab_step = 0, align_step = 0, servo_step = 0, post_step = 0, drop_step = 0, done_step = 0, color_step = 0, turn_step = 0,input_count=0,roll_back_step=0,intake_step=0;
     boolean touching=false,out_handle_in=false; boolean half_full = false,wall_route=false, side_align = false;
     double headingang, targetang, turnang,stinput=0,endgame,fine_move_offset=0,time_period=0,stconfirm=0;
+
+    double drone_idle = 0.0, drone_launch = 0.4;
     int folding_step=0,grab_counter=0;
     boolean folding=false, intake_ready=false, prev_side_align = false;
     double ax11,ax12,ax21,ax22;

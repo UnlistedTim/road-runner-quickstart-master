@@ -15,6 +15,8 @@ public class Centerstage extends LinearOpMode {
 
     boolean right_flag = false;
 
+    boolean buffer_to_zero_flag = false;
+
     double speed_factor = 1.0;
 
     public enum State {
@@ -75,6 +77,7 @@ public class Centerstage extends LinearOpMode {
          if (isStopRequested()) return;
         rbg.slide(rbg.arm_slide_collapse);
         rbg.arm_handle.setPosition(rbg.arm_handle_idle);
+        rbg.drone.setPosition(rbg.drone_idle);
         rbg.arm_grab.setPosition(rbg.arm_grab_idle);
 
         telemetry.addLine("Press Start Now!:");
@@ -85,6 +88,12 @@ public class Centerstage extends LinearOpMode {
             switch (state) {
 
                 case INTAKE:
+
+                    if (buffer_to_zero_flag && rbg.arm_rotate.getCurrentPosition() < 200){
+                        rbg.arm_rotate.setTargetPosition(rbg.arm_rotate_ground);
+                        rbg.arm_rotate.setVelocity(500);
+                        buffer_to_zero_flag = false;
+                    }
                     if (gamepad1.left_bumper){
                         speed_factor = 0.4;
                         rbg.intake_ready();
@@ -136,15 +145,17 @@ public class Centerstage extends LinearOpMode {
                         outtake_timer.reset();
                     }
 
-                    if (gamepad2.right_bumper && pixels == 2){
+                    if (gamepad1.right_bumper && pixels == 2){
                         rbg.outtake_1release();
                         pixels--;
                     }
-                    else if (gamepad2.right_bumper && pixels == 1){
+                    else if (gamepad1.right_bumper && pixels == 1){
                         rbg.outtake_2release();
                         pixels--;
                         state = State.INTAKE;
                         speed_factor = 1.0;
+
+                        buffer_to_zero_flag = true;
                     }
 
 
@@ -154,10 +165,18 @@ public class Centerstage extends LinearOpMode {
             }
 
             if (gamepad1.dpad_right){
+                telemetry.addLine("Hang ready");
+                telemetry.update();
                 rbg.hang_ready();
             }
-            if (gamepad1.dpad_right && rbg.arm_rotate.getCurrentPosition() > 800 && rbg.arm_slide.getCurrentPosition() > -800){
+            if (gamepad2.dpad_right){
+                telemetry.addLine("hang start");
+                telemetry.update();
                 rbg.hang();
+            }
+
+            if (gamepad2.dpad_up){
+                rbg.drone_fly();
             }
 
             rbg.coordinate_input(gamepad2.triangle,gamepad2.circle,gamepad2.cross,gamepad2.square);
@@ -171,8 +190,8 @@ public class Centerstage extends LinearOpMode {
             rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, speed_factor);
 
 
-            telemetry.addData("TempInput", rbg.tempinput);
-            telemetry.update();
+//            telemetry.addData("TempInput", rbg.tempinput);
+//            telemetry.update();
 
 //            if (rbg.driving) {
 //                if (robo_drive)

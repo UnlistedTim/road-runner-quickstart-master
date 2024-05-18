@@ -107,6 +107,12 @@ public class Baseauto extends BaseClass {
 
     }
 
+    public void drone_fly(){
+        drone.setPosition(drone_launch);
+        pause(500);
+        drone.setPosition(drone_idle);
+    }
+
     public void coordinate_confirm(boolean touch){
         if (!touch) return;
         if (touch){
@@ -258,6 +264,7 @@ public class Baseauto extends BaseClass {
     }
     public void hang(){
         slide(arm_slide_idle);
+        pause(100000);
 
     }
 
