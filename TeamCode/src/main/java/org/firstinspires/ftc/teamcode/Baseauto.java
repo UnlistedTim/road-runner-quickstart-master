@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,7 +15,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.IMU;
 import android.util.Size;
@@ -32,6 +36,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
@@ -47,6 +52,40 @@ public class Baseauto extends BaseClass {
     }
 
     public ElapsedTime runtimea = new ElapsedTime();
+
+    //Pose2d a1=new Pose2d ();
+
+
+
+
+
+    void route_setup()
+
+    {
+
+        Action tr1;
+        Action tr2;
+        Action tr3;
+        Pose2d start=new Pose2d(0,0,Math.toRadians(0));
+        Pose2d r1= new Pose2d(0,5,Math.toRadians(45));
+        Pose2d r2= new Pose2d(0,10,Math.toRadians(0));
+        Pose2d r3= new Pose2d(0,5,Math.toRadians(-45));
+
+        MecanumDrive drive = new MecanumDrive(super.Op.hardwareMap, start);
+
+        tr1 = drive.actionBuilder(start)
+                .splineToLinearHeading(r1,0)
+//                .waitSeconds(2)
+//                .setTangent(Math.toRadians(90))
+//                .lineToY(48)
+//                .setTangent(Math.toRadians(0))
+//                .lineToX(32)
+//                .strafeTo(new Vector2d(44.5, 30))
+//                .turn(Math.toRadians(180))
+//                .lineToX(47.5)
+//                .waitSeconds(3)
+                .build();
+    }
 
 
 
@@ -107,6 +146,8 @@ public class Baseauto extends BaseClass {
 
     }
 
+
+
     public void drone_fly(){
         drone.setPosition(drone_launch);
         pause(500);
@@ -123,12 +164,16 @@ public class Baseauto extends BaseClass {
 
     public void slide(int target){
 
-        if (target >= -5000 && target <= 0){
+        if (target >= -5300 && target <= 0){
             arm_slide.setTargetPosition(target);
             arm_slide.setVelocity(slide_vel);
         }
 
     }
+
+
+
+
 
     public void slide_extend(){
         slide(0);
@@ -147,10 +192,12 @@ public class Baseauto extends BaseClass {
 
         arm_handle.setPosition(arm_handle_ip1);
         pause(300);
-        arm_grab.setPosition(arm_grab_hold);
+//        arm_grab.setPosition(arm_grab_hold);
+        bottom_claw.setPosition(bottom_claw_hold);
+        top_claw.setPosition(top_claw_hold);
         arm_slide.setTargetPosition(0);
         arm_slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        pause(500);
+        pause(600);
         arm_handle.setPosition(arm_handle_idle);
         pause(100);
 
@@ -165,33 +212,39 @@ public class Baseauto extends BaseClass {
 
     public void outtake_turn(){
 //        rotate(arm_rotate_op7);
-        if (tempinput == 1){
-            rotate(arm_rotate_op1);
-            arm_handle.setPosition(arm_handle_op1);
-        }
-        else if (tempinput == 2){
-            rotate(arm_rotate_op2);
-            arm_handle.setPosition(arm_handle_op2);
-        }
-        else if (tempinput == 3){
-            rotate(arm_rotate_op3);
-            arm_handle.setPosition(arm_handle_op3);
-        }
-        else if (tempinput == 4){
-            rotate(arm_rotate_op4);
-            arm_handle.setPosition(arm_handle_op4);
-        }
+
+        rotate(arm_rotate_op4 - 200);
+        arm_handle.setPosition(arm_handle_op4);
+//        if (tempinput == 1){
+//            rotate(arm_rotate_op1);
+//            arm_handle.setPosition(arm_handle_op1);
+//        }
+//        else if (tempinput == 2){
+//            rotate(arm_rotate_op2);
+//            arm_handle.setPosition(arm_handle_op2);
+//        }
+//        else if (tempinput == 3){
+//            rotate(arm_rotate_op3);
+//            arm_handle.setPosition(arm_handle_op3);
+//        }
+//        else if (tempinput == 4){
+//            rotate(arm_rotate_op4);
+//            arm_handle.setPosition(arm_handle_op4);
+//        }
 
     }
 
 
     public void outtake_1release(){
-        arm_grab.setPosition(arm_grab_open2);
+        bottom_claw.setPosition(bottom_claw_idle);
+
         pause(500);
+
 
     }
 
     public void outtake_ready(){
+        rotate(arm_rotate_op1);
         if (tempinput == 1){
             slide(arm_slide_op1);
         }
@@ -207,13 +260,20 @@ public class Baseauto extends BaseClass {
             slide(arm_slide_op4);
 
         }
+        else if (tempinput == 5){
+            slide(arm_slide_op5);
+
+        }
+        else if (tempinput == 6){
+            slide(arm_slide_op6);
+        }
 
 
     }
 
     public void manual_slide_up(){
 
-        if (tempinput < 4){
+        if (tempinput < 6){
             tempinput++;
         }
         outtake_ready();
@@ -228,7 +288,9 @@ public class Baseauto extends BaseClass {
 
     public void outtake_2release(){
 
-        arm_grab.setPosition(arm_grab_idle);
+        top_claw.setPosition(top_claw_idle+0.03);
+
+        //arm_grab.setPosition(arm_grab_idle);
         pause(200);
         rotate(arm_rotate_out_buffer);
         slide(arm_slide_idle);
@@ -247,24 +309,146 @@ public class Baseauto extends BaseClass {
     }
 
     public void intake_ready(){
-        rotate(arm_rotate_ground);
+        rotate(arm_rotate_ground); //arm_rotate_ground
         slide(arm_slide_extend);
         arm_handle.setPosition(arm_handle_ip0);
-        arm_grab.setPosition(arm_grab_idle);
+//        arm_grab.setPosition(arm_grab_idle);
+        bottom_claw.setPosition(bottom_claw_open);
+        top_claw.setPosition(top_claw_open);
         arm_rotate.setPower(0);
     }
 
     public void hang_ready(){
+        stop_drive();
         slide(arm_slide_idle);
         pause(500);
         rotate(arm_rotate_hang);
         pause(500);
-        slide(arm_slide_hang);
+        slide(arm_slide_extend);
+
 
     }
     public void hang(){
-        slide(arm_slide_idle);
+        stop_drive();
+        slide(arm_slide_hang);
         pause(100000);
+
+    }
+
+
+    public void outtakeauto(){
+        stop_drive();
+
+        pause(500);
+
+        rotate( arm_rotate_op1);
+        pause(500);
+        timer3(0);
+
+        while(Op.opModeIsActive() &&  gap >=15 && ! timer3(3000)){
+            dist_align();
+//            telemetry.addData("front_dist",  front_dist.getDistance(DistanceUnit.MM));
+//            telemetry.update();
+        }
+        stop_drive();
+        pause(500);
+
+        // outake 2 release
+        top_claw.setPosition( top_claw_idle+0.03);
+
+        //arm_grab.setPosition(arm_grab_idle);
+        pause(500);
+        rotate( arm_rotate_out_buffer);
+        slide( arm_slide_idle);
+        arm_handle.setPosition( arm_handle_idle);
+        //pause(500);
+        rotate( arm_rotate_buffer);
+        pause(1000);
+        rotate( arm_rotate_ground);
+        slide( arm_slide_extend);
+        pause(50000);
+    }
+
+    public void autoback(){
+
+        timer2(0);
+
+        while (Op.opModeIsActive() && !timer2(3000)){
+             targetFound = false;
+             desiredTag  = null;
+
+            // Step through the list of detected tags arnd look for a matching tag
+            List<AprilTagDetection> currentDetections =  aprilTag.getDetections();
+            for (AprilTagDetection detection : currentDetections) {
+                // Look to see if we have size info on this tag.
+                if (detection.metadata != null) {
+                    //  Check to see if we want to track towards this tag.
+                    if ( detection.id ==  DESIRED_TAG_ID) {
+                        // Yes, we want to use this tag.
+                         targetFound = true;
+                         desiredTag = detection;
+//                        telemetry.addData("Detection ID", detection.id);
+                        break;  // don't look any further.
+
+                    }
+                }
+            }
+
+            if ( targetFound) {
+
+                // Determine heading, range and Yaw (tag image rotation) error so we can use them to control the robot automatically.
+                double  rangeError      = ( front_dist.getDistance(DistanceUnit.INCH) -  DESIRED_DISTANCE_T);
+                double  headingError    =  base_align_angle -  imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES));
+                double yawError =  desiredTag.ftcPose.yaw -  STRAFE_TARG;
+
+                // Use the speed and turn "gains" to calculate how we want the robot to move.
+                 drive  = Range.clip(rangeError *  AUTOSPEED_GAIN, - MAX_AUTO_SPEED,  MAX_AUTO_SPEED);
+                 turn   = -Range.clip(headingError *  TURN_GAIN, - MAX_AUTO_TURN,  MAX_AUTO_TURN) ;
+                 strafe = -Range.clip(yawError *  STRAFE_GAIN, - MAX_AUTO_STRAFE,  MAX_AUTO_STRAFE);
+                 moveRobot( drive,  strafe,  turn,1, true);
+
+//                telemetry.addData("Auto","Drive %5.2f, Strafe %5.2f, Turn %5.2f ",  drive,  strafe,  turn);
+//                telemetry.addData("Range", "%5.1f inches",  desiredTag.ftcPose.range);
+//                telemetry.addData("Bearing", "%3.0f degrees",  desiredTag.ftcPose.bearing);
+//                telemetry.addData("Yaw", "%3.0f degrees",  desiredTag.ftcPose.yaw);
+            }
+            else {
+                 stop_drive();
+            }
+
+        }
+
+         stop_drive();
+
+        pause(500);
+
+         rotate( arm_rotate_op1);
+        pause(500);
+         timer3(0);
+
+        while(Op.opModeIsActive() &&  gap >=16 && ! timer3(3000)){
+             dist_align();
+//            telemetry.addData("front_dist",  front_dist.getDistance(DistanceUnit.MM));
+//            telemetry.update();
+        }
+         stop_drive();
+        pause(500);
+
+        // outake 2 release
+         top_claw.setPosition( top_claw_idle+0.03);
+
+        //arm_grab.setPosition(arm_grab_idle);
+        pause(500);
+         rotate( arm_rotate_out_buffer);
+         slide( arm_slide_idle);
+         arm_handle.setPosition( arm_handle_idle);
+        //pause(500);
+         rotate( arm_rotate_buffer);
+        pause(1000);
+         rotate( arm_rotate_ground);
+         slide( arm_slide_extend);
+        pause(50000);
+
 
     }
 

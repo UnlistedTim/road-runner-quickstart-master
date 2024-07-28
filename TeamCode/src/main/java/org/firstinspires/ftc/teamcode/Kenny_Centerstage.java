@@ -70,7 +70,7 @@ public class Kenny_Centerstage extends LinearOpMode {
          if (isStopRequested()) return;
         rbg.slide(rbg.arm_slide_collapse);
         rbg.arm_handle.setPosition(rbg.arm_handle_idle);
-        rbg.arm_grab.setPosition(rbg.arm_grab_idle);
+        //rbg.arm_grab.setPosition(rbg.arm_grab_idle);
 
         telemetry.addLine("Press Start Now!:");
         telemetry.update();

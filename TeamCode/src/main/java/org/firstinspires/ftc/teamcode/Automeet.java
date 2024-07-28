@@ -29,10 +29,11 @@ public class Automeet extends LinearOpMode {
         rbga.baseblue=false;
         rbga.baseright=false;
 
-
+    //rbga.route(hardwareMap);
+    //rbga.route(hardwareMap);
     configuration_info();
 
-    rbga.index=huskydet();
+   // rbga.index=huskydet();
     waitForStart();
         rbga.endgame= rbga.runtime.seconds()+30;
 
@@ -40,6 +41,7 @@ public class Automeet extends LinearOpMode {
 
              rbga.index=2;
          }
+
 
 
 
