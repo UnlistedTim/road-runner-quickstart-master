@@ -47,10 +47,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 
 public class BaseClass extends MecanumDrive {
-    protected DcMotorEx front_left;
-    protected DcMotorEx front_right;
-    protected DcMotorEx rear_left;
-    protected DcMotorEx rear_right;
+//    protected DcMotorEx leftFront;
+//    protected DcMotorEx rightFront;
+//    protected DcMotorEx leftBack;
+//    protected DcMotorEx rightBack;
     protected DcMotorEx arm_rotate;
     protected DcMotorEx arm_slide;
     //    protected Servo arm_grab;
@@ -83,15 +83,15 @@ public class BaseClass extends MecanumDrive {
     double power;
 
     //Servo preset value
-    double arm_handle_ip0 = 0.915, arm_handle_ip1 = 0.95, arm_handle_ip2, arm_handle_ip3, arm_handle_ip4, arm_handle_ip5, arm_handle_idle = 0.85;
-    double arm_handle_op1 = 0.43, arm_handle_op2 = 0.43, arm_handle_op3 = 0.43, arm_handle_op4 = 0.43, arm_handle_op6, arm_handle_op7 = 0.205, arm_handle_op8, arm_handle_op9;
+    double arm_handle_ip0 = 0.54, arm_handle_ip1 = 0.585, arm_handle_ip2, arm_handle_ip3, arm_handle_ip4, arm_handle_ip5, arm_handle_idle = 0.44;
+    double arm_handle_op1 = 0.05, arm_handle_op2 = 0.05, arm_handle_op3 = 0.05, arm_handle_op4 = 0.05, arm_handle_op6, arm_handle_op7 = 0.03, arm_handle_op8, arm_handle_op9;
     double arm_grab_hold = 0.34, arm_grab_idle = 0.0, arm_grab_open1, arm_grab_open2 = 0.2;
-    double top_claw_hold = 0.69, top_claw_idle = 0.76, top_claw_open = 0.85;
-    double bottom_claw_hold = 0.29, bottom_claw_idle = 0.18, bottom_claw_open = 0.09;
+    double top_claw_hold = 0.73, top_claw_idle = 0.8, top_claw_open = 0.9;
+    double bottom_claw_hold = 0.3, bottom_claw_idle = 0.2, bottom_claw_open = 0.1;
 
     double front_dist_low = 100, front_dist_high = 300;
     double left_dist_low = 100, left_dist_high = 300;
-    double handle_dist_det = 0.69;
+    double handle_dist_det = 0.33;
 
     //Motor preset value
 
@@ -99,7 +99,7 @@ public class BaseClass extends MecanumDrive {
     int arm_rotate_op1 = 1600, arm_rotate_op2 = 1600, arm_rotate_op3 = 1600, arm_rotate_op4 = 1600, arm_rotate_op5, arm_rotate_op6, arm_rotate_op7 = 1600, arm_rotate_op8, arm_rotate_op9, arm_rotate_out_buffer = arm_rotate_op4 - 150;
     //arm rotate new 1500
     int arm_rotate_hang = 900;
-    int arm_slide_extend = 0, arm_slide_turn = -3000, arm_slide_idle = -5000, arm_slide_collapse = -5200, arm_slide_hang = -4000, arm_slide_auto = -5300;
+    int arm_slide_extend = 0, arm_slide_turn = -3000, arm_slide_idle = -5000, arm_slide_collapse = -5200, arm_slide_hang = -4000, arm_slide_auto = -530, arm_slide_intake = -4000;
     int arm_slide_op1 = -4800, arm_slide_op2 = -3800, arm_slide_op3 = -3000, arm_slide_op4 = -2200, arm_slide_op5 = -1400, arm_slide_op6 = -400, arm_slide_op7, arm_slide_op8, arm_slide_op9;
 
     //1: -4800 2: -4000 3: -3200; 4: -2400
@@ -270,13 +270,12 @@ public class BaseClass extends MecanumDrive {
     public BaseClass(LinearOpMode linearOpMode, Pose2d pose) {
         super(linearOpMode.hardwareMap, pose);
         Op = linearOpMode;
-        initHardware(Op.hardwareMap);
+     initHardware(Op.hardwareMap);
     }
 
     public BaseClass(HardwareMap hardwareMap, Pose2d pose1) {
         super(hardwareMap, pose1);
-        initHardware(hardwareMap);
-
+     initHardware(hardwareMap);
     }
 
 
@@ -411,20 +410,20 @@ public class BaseClass extends MecanumDrive {
     }
 
     public void strafe(double power) {
-        front_left.setPower(power);
-        front_right.setPower(-power);
-        rear_left.setPower(-power);
-        rear_right.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(-power);
+        leftBack.setPower(-power);
+        rightBack.setPower(power);
     }
 
 
     public void initHardware(HardwareMap hardwareMap) {
 //        imu = hardwareMap.get(IMU.class, "imu");
 //        imu.initialize(imuparameters);
-        front_left = hardwareMap.get(DcMotorEx.class, "front_left");
-        front_right = hardwareMap.get(DcMotorEx.class, "front_right");
-        rear_left = hardwareMap.get(DcMotorEx.class, "rear_left");
-        rear_right = hardwareMap.get(DcMotorEx.class, "rear_right");
+//        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+//        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+//        leftBack = hardwareMap.get(DcMotorEx.class, "leftBack");
+//        rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
 
         arm_rotate = hardwareMap.get(DcMotorEx.class, "arm_rotate");
         arm_slide = hardwareMap.get(DcMotorEx.class, "arm_slide");
@@ -460,37 +459,35 @@ public class BaseClass extends MecanumDrive {
         arm_handle.setDirection(Servo.Direction.REVERSE);
         drone.setDirection(Servo.Direction.REVERSE);
 
-        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rear_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rear_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+//
+//
+//
+//
+//        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        front_left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        front_right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rear_left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rear_right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        front_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        rear_right.setDirection(DcMotorSimple.Direction.REVERSE);
-        rear_left.setDirection(DcMotorSimple.Direction.FORWARD);
-        front_left.setDirection(DcMotorSimple.Direction.FORWARD);
-
-
-
-
-        front_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rear_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rear_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        IMU.Parameters imuparameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
-
-        imu = hardwareMap.get(IMU.class, "imu");
-
-        imu.initialize(imuparameters);
-        imu.resetYaw();
+//        IMU.Parameters imuparameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+//                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+//                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+//
+//        imu = hardwareMap.get(IMU.class, "imu");
+//
+//        imu.initialize(imuparameters);
+//        imu.resetYaw();
 
 
         initAprilTag();
@@ -597,8 +594,8 @@ public class BaseClass extends MecanumDrive {
 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
-//        rear_right.setDirection(DcMotorSimple.Direction.REVERSE);
-//        rear_left.setDirection(DcMotorSimple.Direction.REVERSE);
+//        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         // Rotate the movement direction counter to the bot's rotation
@@ -613,10 +610,10 @@ public class BaseClass extends MecanumDrive {
         double frontRightPower = (rotY - rotX - rx) / denominator;
         double backRightPower = (rotY + rotX - rx) / denominator;
 
-        front_left.setPower(frontLeftPower);
-        rear_left.setPower(backLeftPower);
-        front_right.setPower(frontRightPower);
-        rear_right.setPower(backRightPower);
+        leftFront.setPower(frontLeftPower);
+        leftBack.setPower(backLeftPower);
+        rightFront.setPower(frontRightPower);
+        rightBack.setPower(backRightPower);
 
     }
 
@@ -626,37 +623,37 @@ public class BaseClass extends MecanumDrive {
         double dir = 1;
         if (right) dir = -1;
         // double  power=1;
-        front_left.setPower(dir * (power + 0.035));
-        rear_left.setPower(-dir * power);
-        front_right.setPower(-dir * (power + 0.03));
-        rear_right.setPower(dir * power);
+        leftFront.setPower(dir * (power + 0.035));
+        leftBack.setPower(-dir * power);
+        rightFront.setPower(-dir * (power + 0.03));
+        rightBack.setPower(dir * power);
     }
 
 
     protected void robot_centric(double iy, double ix, double irx, double ratio) {
 
-        double y = iy;
-        double x = -ix * 1.1; // Counteract imperfect strafing
-        double rx = -irx * 0.75;
+        double y = -iy;
+        double x = ix * 1.1; // Counteract imperfect strafing
+        double rx = irx * 0.75;
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        front_left.setPower(frontLeftPower * ratio);
-        front_right.setPower(frontRightPower * ratio);
-        rear_left.setPower(backLeftPower * ratio);
-        rear_right.setPower(backRightPower * ratio);
+        leftFront.setPower(frontLeftPower * ratio);
+        rightFront.setPower(frontRightPower * ratio);
+        leftBack.setPower(backLeftPower * ratio);
+        rightBack.setPower(backRightPower * ratio);
 
 
     }
 
     protected void vel_robot_centric(double iy, double ix, double irx, double ratio) {
 
-        double y = iy;
-        double x = -ix; // Counteract imperfect strafing 1.1
-        double rx = -irx ; // 0.75
+        double y = -iy;
+        double x = ix; // Counteract imperfect strafing 1.1
+        double rx = irx ; // 0.75
         double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double frontLeftPower = (y + x + rx) / denominator;
         double backLeftPower = (y - x + rx) / denominator;
@@ -665,10 +662,10 @@ public class BaseClass extends MecanumDrive {
 
 
 
-        motor_vel(front_left,frontLeftPower * ratio,true);
-        motor_vel(front_right, frontRightPower * ratio,true);
-        motor_vel(rear_left,backLeftPower * ratio,true);
-        motor_vel(rear_right,backRightPower * ratio,true);
+        motor_vel(leftFront,frontLeftPower * ratio,true);
+        motor_vel(rightFront, frontRightPower * ratio,true);
+        motor_vel(leftBack,backLeftPower * ratio,true);
+        motor_vel(rightBack,backRightPower * ratio,true);
 
 
     }
@@ -683,10 +680,10 @@ public class BaseClass extends MecanumDrive {
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        front_left.setPower(-frontLeftPower * 0.3);
-        front_right.setPower(-frontRightPower * 0.3);
-        rear_left.setPower(-backLeftPower * 0.3);
-        rear_right.setPower(-backRightPower * 0.3);
+        leftFront.setPower(-frontLeftPower * 0.3);
+        rightFront.setPower(-frontRightPower * 0.3);
+        leftBack.setPower(-backLeftPower * 0.3);
+        rightBack.setPower(-backRightPower * 0.3);
 
 
     }
@@ -701,16 +698,16 @@ public class BaseClass extends MecanumDrive {
     public void forward(double power, long ms) {
 
 
-        front_left.setPower(power);
-        rear_left.setPower(power);
-        front_right.setPower(power);
-        rear_right.setPower(power);
+        leftFront.setPower(power);
+        leftBack.setPower(power);
+        rightFront.setPower(power);
+        rightBack.setPower(power);
 
         pause(ms);
-        front_left.setPower(0);
-        front_right.setPower(0);
-        rear_left.setPower(0);
-        rear_right.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+        rightBack.setPower(0);
 
     }
 
@@ -757,36 +754,36 @@ public class BaseClass extends MecanumDrive {
     public void fl_vel(double percent){
         if (percent > 1.0 || percent < -1.0) return;
         if (Math.abs(percent *RPS) < 50){
-            front_left.setPower(0);
+            leftFront.setPower(0);
             return;
         }
-        front_left.setVelocity(percent * RPS);
+        leftFront.setVelocity(percent * RPS);
     }
 
     public void fr_vel(double percent){
         if (percent > 1.0 || percent < -1.0) return;
         if (Math.abs(percent *RPS) < 50){
-            front_right.setPower(0);
+            rightFront.setPower(0);
             return;
         }
-        front_right.setVelocity(percent * RPS);
+        rightFront.setVelocity(percent * RPS);
     }
 
     public void rl_vel(double percent){
         if (percent > 1.0 || percent < -1.0) return;
         if (Math.abs(percent *RPS) < 50){
-            rear_left.setPower(0);
+            leftBack.setPower(0);
             return;
         }
-        rear_left.setVelocity(percent * RPS);
+        leftBack.setVelocity(percent * RPS);
     }
     public void rr_vel(double percent){
         if (percent > 1.0 || percent < -1.0) return;
         if (Math.abs(percent *RPS) < 50){
-            rear_right.setPower(0);
+            rightBack.setPower(0);
             return;
         }
-        rear_right.setVelocity(percent * RPS);
+        rightBack.setVelocity(percent * RPS);
     }
     public void motor_vel(DcMotorEx mot,double percent, boolean ignore){
         //if (percent > 1.0 || percent < -1.0) return;
@@ -875,17 +872,17 @@ public class BaseClass extends MecanumDrive {
     }
 
     public void move(double power) {
-        front_left.setPower(power);
-        front_right.setPower(power);
-        rear_left.setPower(power);
-        rear_right.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+        leftBack.setPower(power);
+        rightBack.setPower(power);
     }
 
     public void stop_drive() {
-        front_left.setPower(0);
-        front_right.setPower(0);
-        rear_left.setPower(0);
-        rear_right.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftBack.setPower(0);
+        rightBack.setPower(0);
     }
 
 
@@ -924,10 +921,10 @@ public class BaseClass extends MecanumDrive {
 
 
         // Send powers to the wheels.
-        front_left.setPower(leftFrontPower * intake);
-        rear_left.setPower(leftBackPower * intake);
-        front_right.setPower(rightFrontPower * intake);
-        rear_right.setPower(rightBackPower * intake);
+        leftFront.setPower(leftFrontPower * intake);
+        leftBack.setPower(leftBackPower * intake);
+        rightFront.setPower(rightFrontPower * intake);
+        rightBack.setPower(rightBackPower * intake);
 
     }
 
@@ -1066,11 +1063,11 @@ public class BaseClass extends MecanumDrive {
         power = -0.0008 * gap;
         if (power < -0.4) power = -0.4;
         if (power > -0.02) power = -0.03;
-        if (gap >= 15 ) {
-            motor_vel(front_left,-power,false);
-            motor_vel(front_right,-power,false);
-            motor_vel(rear_left,-power,false);
-            motor_vel(rear_right,-power,false);
+        if (gap >= 10 ) {
+            motor_vel(leftFront,power,false);
+            motor_vel(rightFront,power,false);
+            motor_vel(leftBack,power,false);
+            motor_vel(rightBack,power,false);
 
         } else {
             stop_drive();

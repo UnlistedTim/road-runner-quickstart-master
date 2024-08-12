@@ -78,19 +78,19 @@ public class CenterAuto extends LinearOpMode {
 
 
     Pose2d start=new Pose2d(0,0,Math.toRadians(0));
-    Pose2d r1= new Pose2d(2.5,0,Math.toRadians(12));
+    Pose2d r1= new Pose2d(2.5,0,Math.toRadians(11));
     Pose2d r2= new Pose2d(4.5,0,Math.toRadians(0));
-    Pose2d r3= new Pose2d(2.5,0,Math.toRadians(-11)); // -10.5
+    Pose2d r3= new Pose2d(2.5,0,Math.toRadians(-9)); // -10.5
 
     Pose2d b1= new Pose2d(2.5,0,Math.toRadians(11));
     Pose2d b2= new Pose2d(4.5,0,Math.toRadians(0));
-    Pose2d b3= new Pose2d(2.5,0,Math.toRadians(-12));
+    Pose2d b3= new Pose2d(2.5,0,Math.toRadians(-10.5));
    Pose2d r22=new Pose2d(4.5,-5,Math.toRadians(-80));
 
-   Pose2d bpreout2 = new Pose2d(66,50,Math.toRadians(-83));
-   Pose2d bpreout1 = new Pose2d(89,50,Math.toRadians(-84));
-   Pose2d bpreout3 = new Pose2d(53, -50, Math.toRadians(-82));
-   Pose2d rpreout2 = new Pose2d(65, -50, Math.toRadians(82));
+   Pose2d bpreout2 = new Pose2d(30,50,Math.toRadians(-83));  //66
+   Pose2d bpreout1 = new Pose2d(49,50,Math.toRadians(-84));
+   Pose2d bpreout3 = new Pose2d(60, -50, Math.toRadians(-82)); //80
+   Pose2d rpreout2 = new Pose2d(68, -50, Math.toRadians(82));
    Pose2d rpreout3 = new Pose2d(53, -50,Math.toRadians(82));
 
    Pose2d t1back = new Pose2d(2.5,0,Math.toRadians(0));
@@ -106,32 +106,32 @@ public class CenterAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        rbga = new Baseauto(this, pp);
+        rbga = new Baseauto(this, start);
 
         rbga.baseblue = false;
 //        rbga.baseright = false;
 
 
-        MecanumDrive drive = new MecanumDrive(super.hardwareMap, start);
+      // MecanumDrive drive = new MecanumDrive(super.hardwareMap, start);
 
 
-        rbga.front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rbga.front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rbga.rear_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rbga.rear_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rbga.front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rbga.front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rbga.rear_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        rbga.rear_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//
+//        rbga.front_left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rbga.front_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rbga.rear_left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rbga.rear_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//
+//        rbga.front_right.setDirection(DcMotorSimple.Direction.FORWARD);
+//        rbga.rear_right.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
-        rbga.front_left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rbga.front_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rbga.rear_left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rbga.rear_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        rbga.front_right.setDirection(DcMotorSimple.Direction.FORWARD);
-        rbga.rear_right.setDirection(DcMotorSimple.Direction.FORWARD);
-
-
-
-        tr1 = drive.actionBuilder(start)
+        tr1 = rbga.actionBuilder(start)
                 .lineToX(2.5)
                 .turn(Math.toRadians(11))
 //                .waitSeconds(2)
@@ -145,7 +145,7 @@ public class CenterAuto extends LinearOpMode {
 //                .waitSeconds(3)
                 .build();
 
-        tb1 = drive.actionBuilder(start)
+        tb1 = rbga.actionBuilder(start)
                 .lineToX(2.5)
                 .turn(Math.toRadians(11))
 //                .waitSeconds(2)
@@ -162,14 +162,14 @@ public class CenterAuto extends LinearOpMode {
 
 
 
-        turn1back = drive.actionBuilder(r1)
+        turn1back = rbga.actionBuilder(r1)
                 .turn(Math.toRadians(-11))
                 .build();
 
-        bturn1back = drive.actionBuilder(r1)
-                .turn(Math.toRadians(11))
+        bturn1back = rbga.actionBuilder(b3)
+                .turn(Math.toRadians(25))// 10.5 // 10.5
                 .build();
-        tr2 = drive.actionBuilder(start)
+        tr2 = rbga.actionBuilder(start)
 //                .splineToLinearHeading(r2, 0)
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
@@ -182,7 +182,7 @@ public class CenterAuto extends LinearOpMode {
 //                .waitSeconds(3)
                 .build();
 
-        tb2 = drive.actionBuilder(start)
+        tb2 = rbga.actionBuilder(start)
                 .lineToX(4.5)
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
@@ -195,9 +195,9 @@ public class CenterAuto extends LinearOpMode {
 //                .waitSeconds(3)
                 .build();
 
-        tr3 = drive.actionBuilder(start)
+        tr3 = rbga.actionBuilder(start)
                 .lineToX(2.5)
-                .turn(Math.toRadians(-8))
+                .turn(Math.toRadians(-9))
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .setTangent(Math.toRadians(0))
@@ -208,7 +208,7 @@ public class CenterAuto extends LinearOpMode {
 //                .waitSeconds(3)
                 .build();
 
-        tb3 = drive.actionBuilder(start)
+        tb3 = rbga.actionBuilder(start)
                 .lineToX(2.5)
                 .turn(Math.toRadians(-10.5))
 //                .waitSeconds(2)
@@ -222,33 +222,35 @@ public class CenterAuto extends LinearOpMode {
                 .build();
 
 
-       pre2 = drive.actionBuilder(r2)
+       pre2 = rbga.actionBuilder(r2)
                .splineToLinearHeading(rpreout2,0)
                .build();
-       bpre2 = drive.actionBuilder(b2)
+       bpre2 = rbga.actionBuilder(b2)
                 .splineToSplineHeading(bpreout2,0)
                 .build();
 
-       pre1 = drive.actionBuilder(r1)
+       pre1 = rbga.actionBuilder(r1)
                        .splineToLinearHeading(rpreout1,0)
                         .build();
 
-        bpre1 = drive.actionBuilder(b1)
+       
+
+        bpre1 = rbga.actionBuilder(b1)
                 .splineToLinearHeading(bpreout1,0)
                 .build();
 
-       pre3 = drive.actionBuilder(r3)
+       pre3 = rbga.actionBuilder(r3)
                        .splineToLinearHeading(rpreout3,0)
                                .build();
-        bpre3 = drive.actionBuilder(b3)
-                .splineToLinearHeading(bpreout1,0)
+        bpre3 = rbga.actionBuilder(b3)
+                .splineToLinearHeading(bpreout3,0)
                 .build();
 
 
 
 
 
-        rbga.imu.initialize(rbga.imuparameters);
+
 
 
         while (!isStopRequested() && !setup_ready){
@@ -258,7 +260,7 @@ public class CenterAuto extends LinearOpMode {
                 rbga.top_claw.setPosition(rbga.top_claw_hold);
                 sleep(3000);
                 rbga.slide(rbga.arm_slide_collapse);
-                rbga.arm_handle.setPosition(rbga.handle_dist_det);
+                rbga.arm_handle.setPosition(rbga.arm_handle_idle);
                 sleep(1500);
                 setup_ready = true;
 
@@ -280,8 +282,8 @@ public class CenterAuto extends LinearOpMode {
         }
 
         waitForStart();
-        rbga.imu.resetYaw();
-        sleep(300);
+      //  rbga.imu.resetYaw();
+      //  sleep(300);
 
 
         while (opModeIsActive()) {
@@ -350,11 +352,11 @@ public class CenterAuto extends LinearOpMode {
             rbga.bottom_claw.setPosition(rbga.bottom_claw_idle);
             sleep(500);
 
-            if (rbga.baseblue){
-                rbga.stop_drive();
-                return;
-
-            }
+//            if (rbga.baseblue){
+//                rbga.stop_drive();
+//                return;
+//
+//            }
             rbga.slide(rbga.arm_slide_collapse);
             rbga.arm_handle.setPosition(rbga.arm_handle_idle);
             sleep(1500);
@@ -367,7 +369,6 @@ public class CenterAuto extends LinearOpMode {
             telemetry.update();
             if (path == 1){
                 if (rbga.baseblue == true){
-                    bturn1back();
                     bautoroutepre1();
                 }
                 else{
@@ -388,6 +389,7 @@ public class CenterAuto extends LinearOpMode {
             }
             else{
                 if (rbga.baseblue == true){
+                    bturn1back();
                     bautoroutepre3();
                 }
                 else{
@@ -407,14 +409,6 @@ public class CenterAuto extends LinearOpMode {
 
             rbga.arm_handle.setPosition(rbga.arm_handle_op1);
             sleep(250);
-
-
-
-
-            rbga.front_right.setDirection(DcMotorSimple.Direction.REVERSE);
-            rbga.rear_right.setDirection(DcMotorSimple.Direction.REVERSE);
-            rbga.front_left.setDirection(DcMotorSimple.Direction.FORWARD);
-            rbga.rear_left.setDirection(DcMotorSimple.Direction.FORWARD);
 
             rbga.outtakeauto();
 //            rbga.autoback();
@@ -611,9 +605,10 @@ public class CenterAuto extends LinearOpMode {
 
 
         sleep(500);
-        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
         rbga.slide(rbga.arm_slide_extend);
         sleep(1500);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
         rbga.slide(rbga.arm_slide_extend-200);
         sleep(500);
 
@@ -633,9 +628,10 @@ public class CenterAuto extends LinearOpMode {
 
 
         sleep(500);
-        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
         rbga.slide(rbga.arm_slide_extend);
         sleep(1500);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
         rbga.slide(rbga.arm_slide_extend-200);
         sleep(500);
 
@@ -728,9 +724,10 @@ public class CenterAuto extends LinearOpMode {
 
 
         sleep(500);
-        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
         rbga.slide(rbga.arm_slide_extend);
         sleep(1500);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
         rbga.slide(rbga.arm_slide_extend-200);
         sleep(500);
 
@@ -750,9 +747,10 @@ public class CenterAuto extends LinearOpMode {
 
 
         sleep(500);
-        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
         rbga.slide(rbga.arm_slide_extend);
         sleep(1500);
+        rbga.arm_handle.setPosition(rbga.arm_handle_ip1);
         rbga.slide(rbga.arm_slide_extend-200);
         sleep(500);
 
