@@ -345,7 +345,7 @@ public class Baseauto extends BaseClass {
         pause(500);
         timer3(0);
 
-        while(Op.opModeIsActive() &&  gap >=15 && ! timer3(3000)){
+        while(Op.opModeIsActive() &&  gap >=13 && ! timer3(3000)){
             dist_align();
 //            telemetry.addData("front_dist",  front_dist.getDistance(DistanceUnit.MM));
 //            telemetry.update();
@@ -419,6 +419,8 @@ public class Baseauto extends BaseClass {
         }
 
          stop_drive();
+
+        stop_drive();
 
         pause(500);
 
