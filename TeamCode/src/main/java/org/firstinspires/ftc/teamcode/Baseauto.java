@@ -74,6 +74,7 @@ public class Baseauto extends BaseClass {
         MecanumDrive drive = new MecanumDrive(super.Op.hardwareMap, start);
 
         tr1 = drive.actionBuilder(start)
+
                 .splineToLinearHeading(r1,0)
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))

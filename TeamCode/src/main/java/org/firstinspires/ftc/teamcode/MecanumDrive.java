@@ -80,8 +80,8 @@ public class MecanumDrive {
         public double maxProfileAccel = 40;
 
         // turn profile parameters (in radians)
-        public double maxAngVel = Math.PI; // shared with path
-        public double maxAngAccel = Math.PI;
+        public double maxAngVel = Math.PI/2; // shared with path math.PI
+        public double maxAngAccel = Math.PI/2;// Math.pi
 
         // path controller gains
         public double axialGain = 1;
@@ -140,7 +140,7 @@ public class MecanumDrive {
             front_right = new OverflowEncoder(new RawEncoder(MecanumDrive.this.rightFront));
 
             imu = lazyImu.get();
-            imu.resetYaw();
+           // imu.resetYaw();
 
             // TODO: reverse encoders if needed
             //   leftFront.setDirection(DcMotorSimple.Direction.REVERSE);

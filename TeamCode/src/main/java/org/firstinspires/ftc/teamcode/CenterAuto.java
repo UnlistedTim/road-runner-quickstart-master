@@ -82,21 +82,28 @@ public class CenterAuto extends LinearOpMode {
     Pose2d r2= new Pose2d(4.5,0,Math.toRadians(0));
     Pose2d r3= new Pose2d(2.5,0,Math.toRadians(-9)); // -10.5
 
+    Pose2d rpreout1 = new Pose2d(89, -50, Math.toRadians(84)); // 91
+    Pose2d rpreout2 = new Pose2d(68, -50, Math.toRadians(82));
+    Pose2d rpreout3 = new Pose2d(53, -50,Math.toRadians(82));
+
+
+
+
     Pose2d b1= new Pose2d(2.5,0,Math.toRadians(11));
     Pose2d b2= new Pose2d(4.5,0,Math.toRadians(0));
     Pose2d b3= new Pose2d(2.5,0,Math.toRadians(-10.5));
-   Pose2d r22=new Pose2d(4.5,-5,Math.toRadians(-80));
 
+
+    Pose2d bpreout1 = new Pose2d(49,50,Math.toRadians(-84));
    Pose2d bpreout2 = new Pose2d(30,50,Math.toRadians(-83));  //66
-   Pose2d bpreout1 = new Pose2d(49,50,Math.toRadians(-84));
-   Pose2d bpreout3 = new Pose2d(60, -50, Math.toRadians(-82)); //80
-   Pose2d rpreout2 = new Pose2d(68, -50, Math.toRadians(82));
-   Pose2d rpreout3 = new Pose2d(53, -50,Math.toRadians(82));
+   Pose2d bpreout3 = new Pose2d(60, 50, Math.toRadians(-82)); //80
+
+
 
    Pose2d t1back = new Pose2d(2.5,0,Math.toRadians(0));
    Pose2d bt1back = new Pose2d(2.5,0,Math.toRadians(0));
 
-   Pose2d rpreout1 = new Pose2d(89, -50, Math.toRadians(84)); // 91
+
 
 //    Pose2d x = new Pose2d(4.5,0,Math.toRadians(0));
 
@@ -222,16 +229,20 @@ public class CenterAuto extends LinearOpMode {
                 .build();
 
 
+
+        pre1 = rbga.actionBuilder(r1)
+                .splineToLinearHeading(rpreout1,0)
+                .build();
        pre2 = rbga.actionBuilder(r2)
                .splineToLinearHeading(rpreout2,0)
                .build();
-       bpre2 = rbga.actionBuilder(b2)
-                .splineToSplineHeading(bpreout2,0)
+        pre3 = rbga.actionBuilder(r3)
+                .splineToLinearHeading(rpreout3,0)
                 .build();
 
-       pre1 = rbga.actionBuilder(r1)
-                       .splineToLinearHeading(rpreout1,0)
-                        .build();
+
+
+
 
        
 
@@ -239,9 +250,11 @@ public class CenterAuto extends LinearOpMode {
                 .splineToLinearHeading(bpreout1,0)
                 .build();
 
-       pre3 = rbga.actionBuilder(r3)
-                       .splineToLinearHeading(rpreout3,0)
-                               .build();
+        bpre2 = rbga.actionBuilder(b2)
+                .splineToSplineHeading(bpreout2,0)
+                .build();
+
+
         bpre3 = rbga.actionBuilder(b3)
                 .splineToLinearHeading(bpreout3,0)
                 .build();
@@ -287,8 +300,8 @@ public class CenterAuto extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            telemetry.addData("IMU", rbga.imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES)));
-            telemetry.update();
+//            telemetry.addData("IMU", rbga.imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES)));
+//            telemetry.update();
 
             rbga.slide(rbga.arm_slide_extend);
 
@@ -303,6 +316,9 @@ public class CenterAuto extends LinearOpMode {
             rbga.arm_handle.setPosition(rbga.arm_handle_ip0);
             sleep(1000);
             TSE_left_det();
+            telemetry.addData("path",path);
+            telemetry.addData("blue",rbga.baseblue);
+            telemetry.update();
             sleep(500);
 
             rbga.slide(rbga.arm_slide_collapse);
@@ -322,8 +338,8 @@ public class CenterAuto extends LinearOpMode {
             }
             else {
                 if (path == 2) {
-                    telemetry.addLine("Path driving 2");
-                    telemetry.update();
+//                    telemetry.addLine("Path driving 2");
+//                    telemetry.update();
                     sleep(500);
                     if (rbga.baseblue){
                         bautoroute2();
@@ -365,8 +381,8 @@ public class CenterAuto extends LinearOpMode {
 
 
 
-            telemetry.addData("IMU", rbga.imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES)));
-            telemetry.update();
+//            telemetry.addData("IMU", rbga.imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES)));
+//            telemetry.update();
             if (path == 1){
                 if (rbga.baseblue == true){
                     bautoroutepre1();
@@ -528,21 +544,10 @@ public class CenterAuto extends LinearOpMode {
 
 
     }
-
-    void autoroutepre3(){
+    void autoroutepre1(){
         Actions.runBlocking(
                 new SequentialAction(
-                        pre3
-                )
-        );
-
-        rbga.stop_drive();
-
-    }
-    void bautoroutepre3(){
-        Actions.runBlocking(
-                new SequentialAction(
-                        bpre3
+                        pre1
                 )
         );
 
@@ -561,6 +566,31 @@ public class CenterAuto extends LinearOpMode {
 
     }
 
+
+    void autoroutepre3(){
+        Actions.runBlocking(
+                new SequentialAction(
+                        pre3
+                )
+        );
+
+        rbga.stop_drive();
+
+    }
+
+    void bautoroutepre1(){
+        Actions.runBlocking(
+                new SequentialAction(
+                        bpre1
+                )
+        );
+
+        rbga.stop_drive();
+
+    }
+
+
+
     void bautoroutepre2(){
         Actions.runBlocking(
                 new SequentialAction(
@@ -572,26 +602,17 @@ public class CenterAuto extends LinearOpMode {
 
     }
 
-    void autoroutepre1(){
+    void bautoroutepre3(){
         Actions.runBlocking(
                 new SequentialAction(
-                        pre1
+                        bpre3
                 )
         );
 
         rbga.stop_drive();
 
     }
-    void bautoroutepre1(){
-        Actions.runBlocking(
-                new SequentialAction(
-                        bpre1
-                )
-        );
 
-        rbga.stop_drive();
-
-    }
 
     void autoroute1() {
         Actions.runBlocking(
