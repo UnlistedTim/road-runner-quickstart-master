@@ -40,6 +40,9 @@ public class OffDebugCenter extends LinearOpMode {
     boolean robo_drive = true;
     boolean end_flag = false;
 
+
+    double drone_val = 0.0;
+
     double top_claw_value = 1.0;
     double bottom_claw_value = 0;
 
@@ -172,7 +175,7 @@ public class OffDebugCenter extends LinearOpMode {
 
         double handle_pos = 0.5;
         double arm_grab_pos = 0;
-        double drone_pos = 0;
+        double drone_pos = 0.85;
 
 //        rbg.front_right.setDirection(DcMotorSimple.Direction.REVERSE);
 //        rear_right.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -187,7 +190,7 @@ public class OffDebugCenter extends LinearOpMode {
         rbg.bottom_claw.setPosition(bottom_claw_value);
         rbg.arm_handle.setPosition(0.5);
 
-        rbg.drone.setPosition(0);
+        rbg.drone.setPosition(drone_pos);
 
 //        rbg.arm_grab.setPosition(0);
 //        rbg.arm_handle.setPosition(0);
@@ -347,9 +350,6 @@ public class OffDebugCenter extends LinearOpMode {
 //
 //
 //            }
-            if (gamepad2.dpad_down){
-                rbg.slide(rbg.arm_slide_idle);
-            }
 
 
 
@@ -366,8 +366,10 @@ public class OffDebugCenter extends LinearOpMode {
                 drone_pos -= 0.01;
                 rbg.drone.setPosition(drone_pos);
                 sleep(500);
-
             }
+
+
+
 
 
 //            //second Pixel release

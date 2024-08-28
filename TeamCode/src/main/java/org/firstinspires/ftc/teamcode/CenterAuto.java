@@ -78,25 +78,25 @@ public class CenterAuto extends LinearOpMode {
 
 
     Pose2d start=new Pose2d(0,0,Math.toRadians(0));
-    Pose2d r1= new Pose2d(2.5,0,Math.toRadians(11));
-    Pose2d r2= new Pose2d(4.5,0,Math.toRadians(0));
-    Pose2d r3= new Pose2d(2.5,0,Math.toRadians(-9)); // -10.5
+    Pose2d r1= new Pose2d(2.5,0,Math.toRadians(13));
+    Pose2d r2= new Pose2d(2.5,0,Math.toRadians(0));
+    Pose2d r3= new Pose2d(2.5,0,Math.toRadians(-13)); // -10.5
 
     Pose2d rpreout1 = new Pose2d(89, -50, Math.toRadians(84)); // 91
-    Pose2d rpreout2 = new Pose2d(68, -50, Math.toRadians(82));
+    Pose2d rpreout2 = new Pose2d(67, -50, Math.toRadians(82));
     Pose2d rpreout3 = new Pose2d(53, -50,Math.toRadians(82));
 
 
 
 
-    Pose2d b1= new Pose2d(2.5,0,Math.toRadians(11));
-    Pose2d b2= new Pose2d(4.5,0,Math.toRadians(0));
-    Pose2d b3= new Pose2d(2.5,0,Math.toRadians(-10.5));
+    Pose2d b1= new Pose2d(2.5,0,Math.toRadians(14.5));
+    Pose2d b2= new Pose2d(3.0,0,Math.toRadians(0));
+    Pose2d b3= new Pose2d(2.5,0,Math.toRadians(-13.5));
 
 
-    Pose2d bpreout1 = new Pose2d(49,50,Math.toRadians(-84));
-   Pose2d bpreout2 = new Pose2d(30,50,Math.toRadians(-83));  //66
-   Pose2d bpreout3 = new Pose2d(60, 50, Math.toRadians(-82)); //80
+    Pose2d bpreout1 = new Pose2d(51,50,Math.toRadians(-82));
+   Pose2d bpreout2 = new Pose2d(28,50,Math.toRadians(-83));  //66
+   Pose2d bpreout3 = new Pose2d(82, 50, Math.toRadians(-82)); //80
 
 
 
@@ -140,7 +140,7 @@ public class CenterAuto extends LinearOpMode {
 
         tr1 = rbga.actionBuilder(start)
                 .lineToX(2.5)
-                .turn(Math.toRadians(11))
+                .turn(Math.toRadians(13))
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .lineToY(48)
@@ -154,7 +154,7 @@ public class CenterAuto extends LinearOpMode {
 
         tb1 = rbga.actionBuilder(start)
                 .lineToX(2.5)
-                .turn(Math.toRadians(11))
+                .turn(Math.toRadians(14.5))
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .lineToY(48)
@@ -170,17 +170,17 @@ public class CenterAuto extends LinearOpMode {
 
 
         turn1back = rbga.actionBuilder(r1)
-                .turn(Math.toRadians(-11))
+                .turn(Math.toRadians(-8))
                 .build();
 
         bturn1back = rbga.actionBuilder(b3)
-                .turn(Math.toRadians(25))// 10.5 // 10.5
+                .turn(Math.toRadians(13))// 10.5 // 10.5
                 .build();
         tr2 = rbga.actionBuilder(start)
 //                .splineToLinearHeading(r2, 0)
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
-                .lineToX(4.5)
+                .lineToX(2.5)
 //                .setTangent(Math.toRadians(0))
 //                .lineToX(32)
 //                .strafeTo(new Vector2d(44.5, 30))
@@ -190,7 +190,7 @@ public class CenterAuto extends LinearOpMode {
                 .build();
 
         tb2 = rbga.actionBuilder(start)
-                .lineToX(4.5)
+                .lineToX(3.0)
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .lineToY(48)
@@ -204,7 +204,7 @@ public class CenterAuto extends LinearOpMode {
 
         tr3 = rbga.actionBuilder(start)
                 .lineToX(2.5)
-                .turn(Math.toRadians(-9))
+                .turn(Math.toRadians(-13))
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .setTangent(Math.toRadians(0))
@@ -217,7 +217,7 @@ public class CenterAuto extends LinearOpMode {
 
         tb3 = rbga.actionBuilder(start)
                 .lineToX(2.5)
-                .turn(Math.toRadians(-10.5))
+                .turn(Math.toRadians(-13.5))
 //                .waitSeconds(2)
 //                .setTangent(Math.toRadians(90))
 //                .setTangent(Math.toRadians(0))
@@ -421,7 +421,7 @@ public class CenterAuto extends LinearOpMode {
             rbga.rotate(rbga.arm_rotate_op1-200);
             sleep(250);
 
-            rbga.slide(rbga.arm_slide_collapse+100);
+            rbga.slide(rbga.arm_slide_collapse+200);
 
             rbga.arm_handle.setPosition(rbga.arm_handle_op1);
             sleep(250);

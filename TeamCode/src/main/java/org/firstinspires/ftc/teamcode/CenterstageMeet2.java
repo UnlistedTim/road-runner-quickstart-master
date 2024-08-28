@@ -246,7 +246,7 @@ public class CenterstageMeet2 extends LinearOpMode {
 
 
             if (!aligning) {
-                rbg.vel_robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, speed_factor);
+                rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, speed_factor);
 //                rbg.robot_centric(gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x, speed_factor);
             }
 

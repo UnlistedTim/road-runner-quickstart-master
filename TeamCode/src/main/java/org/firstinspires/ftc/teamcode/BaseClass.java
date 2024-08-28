@@ -242,7 +242,7 @@ public class BaseClass extends MecanumDrive {
     boolean half_full = false, wall_route = false, side_align = false;
     double headingang, targetang, turnang, stinput = 0, endgame, fine_move_offset = 0, time_period = 0, stconfirm = 0;
 
-    double drone_idle = 0.0, drone_launch = 0.4;
+    double drone_idle = 0.85, drone_launch = 1.0;
     int folding_step = 0, grab_counter = 0;
     boolean folding = false, intake_ready = false, prev_side_align = false;
     double ax11, ax12, ax21, ax22;
@@ -1063,11 +1063,17 @@ public class BaseClass extends MecanumDrive {
         power = -0.0008 * gap;
         if (power < -0.4) power = -0.4;
         if (power > -0.02) power = -0.03;
-        if (gap >= 10 ) {
-            motor_vel(leftFront,power,false);
-            motor_vel(rightFront,power,false);
-            motor_vel(leftBack,power,false);
-            motor_vel(rightBack,power,false);
+        if (gap >= 9 ) {
+
+            leftFront.setPower(power);
+            rightFront.setPower(power);
+            leftBack.setPower(power);
+            rightBack.setPower(power);
+
+//            motor_vel(leftFront,power,false);
+//            motor_vel(rightFront,power,false);
+//            motor_vel(leftBack,power,false);
+//            motor_vel(rightBack,power,false);
 
         } else {
             stop_drive();
